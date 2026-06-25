@@ -80,6 +80,7 @@ body{
     flex-direction: column;
     justify-content: center;
 }
+
 .parametro-senha{
     width: 50%;
     margin: 0 auto;
@@ -98,6 +99,7 @@ body{
     font-size: 24px;
     cursor: pointer;
 }
+
 .parametro-senha__texto{
     padding: 24px;
     border-top: 2px solid var(--borda);
@@ -111,3 +113,19 @@ body{
         flex-direction: row;
     }
 }
+
+/* ======================================================= */
+/* CÓDIGO ADICIONADO DA SUA AULA ATUAL                    */
+/* ======================================================= */
+
+/* Padrão de estilo para as tags label (aumenta o tamanho do texto) */
+label {
+    font-size: 20px;
+}
+
+/* Estilização da classe checkbox (aumenta o tamanho da caixa de seleção) */
+.checkbox {
+    width: 20px;
+    height: 20px;
+}
+ 
