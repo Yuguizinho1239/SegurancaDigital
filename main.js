@@ -39,7 +39,8 @@ function geraSenha() {
         alfabeto = alfabeto + letrasMinusculas;
     }
     if (checkbox[2].checked) {
-        alfabeto = algebra = alfabeto + numeros;
+        // CORRIGIDO: Removido o termo incorreto "algebra =" que quebrava o script
+        alfabeto = alfabeto + numeros;
     }
     if (checkbox[3].checked) {
         alfabeto = alfabeto + simbolos;
@@ -54,11 +55,11 @@ function geraSenha() {
     
     campoSenha.value = senha;
     
-    // ATUALIZADO: Passando o tamanho do alfabeto gerado como argumento da função
+    // Passando o tamanho do alfabeto gerado como argumento da função
     classificaSenha(alfabeto.length);
 }
 
-// FUNÇÃO ATUALIZADA CONFORME AS INSTRUÇÕES DA AULA DE ENTROPIA
+// FUNÇÃO ATUALIZADA CONFORME A NOVA AULA
 function classificaSenha(tamanhoAlfabeto) {
     // Cálculo da Entropia matemática
     let entropia = tamanhoSenha * Math.log2(tamanhoAlfabeto);
@@ -67,7 +68,7 @@ function classificaSenha(tamanhoAlfabeto) {
     // Remove as classes antigas acumuladas para limpar o elemento
     forcaSenha.classList.remove('fraca', 'media', 'forte');
     
-    // ATUALIZADO: Regras condicionais baseadas nos valores de bits de entropia
+    // Regras condicionais baseadas nos valores de bits de entropia
     if (entropia > 57) {
         forcaSenha.classList.add('forte');
     } else if (entropia > 35 && entropia < 57) {
@@ -76,9 +77,10 @@ function classificaSenha(tamanhoAlfabeto) {
         forcaSenha.classList.add('fraca');
     }
 
-    // EXIBIÇÃO DO CÁLCULO: Seleciona a tag do HTML e exibe a estimativa formatada em dias
     const valorEntropia = document.querySelector('.entropia');
-    valorEntropia.textContent = 2 ** Math.floor(entropia) / (100e6 * 60 * 60 * 24);
+    
+    // ATUALIZADO: Operação matemática inteira dentro do Math.floor e textos concatenados com o operador +
+    valorEntropia.textContent = "Um computador pode levar até " + Math.floor(2**entropia/(100e6*60*60*24)) + " dias para descobrir essa senha.";
 }
 
 // CHAMADA INICIAL: Gera a primeira senha e define a força ao carregar a página
