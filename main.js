@@ -13,8 +13,6 @@ const simbolos = '!@%*?';
 const botoes = document.querySelectorAll('.parametro-senha__botao');
 const campoSenha = document.querySelector('#campo-senha');
 const checkbox = document.querySelectorAll('.checkbox');
-
-// CONSTANTE ADICIONADA NESSA AULA PARA GERENCIAR A BARRA DE FORÇA
 const forcaSenha = document.querySelector('.forca');
 
 // =======================================================
@@ -41,7 +39,7 @@ function geraSenha() {
         alfabeto = alfabeto + letrasMinusculas;
     }
     if (checkbox[2].checked) {
-        alfabeto = alfabeto + numeros;
+        alfabeto = algebra = alfabeto + numeros;
     }
     if (checkbox[3].checked) {
         alfabeto = alfabeto + simbolos;
@@ -56,23 +54,31 @@ function geraSenha() {
     
     campoSenha.value = senha;
     
-    // CHAMADA DA FUNÇÃO ADICIONADA NO FINAL
-    classificaSenha();
+    // ATUALIZADO: Passando o tamanho do alfabeto gerado como argumento da função
+    classificaSenha(alfabeto.length);
 }
 
-// NOVA FUNÇÃO CRIADA E ESTRUTURADA NESSA AULA
-function classificaSenha() {
+// FUNÇÃO ATUALIZADA CONFORME AS INSTRUÇÕES DA AULA DE ENTROPIA
+function classificaSenha(tamanhoAlfabeto) {
+    // Cálculo da Entropia matemática
+    let entropia = tamanhoSenha * Math.log2(tamanhoAlfabeto);
+    console.log(entropia);
+    
     // Remove as classes antigas acumuladas para limpar o elemento
     forcaSenha.classList.remove('fraca', 'media', 'forte');
     
-    // Regras condicionais baseadas no tamanhoSenha
-    if (tamanhoSenha > 11) {
+    // ATUALIZADO: Regras condicionais baseadas nos valores de bits de entropia
+    if (entropia > 57) {
         forcaSenha.classList.add('forte');
-    } else if (tamanhoSenha > 5 && tamanhoSenha < 12) {
+    } else if (entropia > 35 && entropia < 57) {
         forcaSenha.classList.add('media');
-    } else if (tamanhoSenha <= 5) {
+    } else if (entropia <= 35) {
         forcaSenha.classList.add('fraca');
     }
+
+    // EXIBIÇÃO DO CÁLCULO: Seleciona a tag do HTML e exibe a estimativa formatada em dias
+    const valorEntropia = document.querySelector('.entropia');
+    valorEntropia.textContent = 2 ** Math.floor(entropia) / (100e6 * 60 * 60 * 24);
 }
 
 // CHAMADA INICIAL: Gera a primeira senha e define a força ao carregar a página
