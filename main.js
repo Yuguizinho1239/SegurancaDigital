@@ -1,74 +1,95 @@
+// =======================================================
+// VARIÁVEIS E CONSTANTES ORGANIZADAS NO TOPO DO ARQUIVO
+// =======================================================
 const numeroSenha = document.querySelector('.parametro-senha__texto');
 let tamanhoSenha = 12;
 numeroSenha.textContent = tamanhoSenha;
 
-const campoSenha = document.querySelector('#campo-senha');
-
-// CONSTANTES ATUALIZADAS NESSA AULA
 const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVXYWZ';
 const letrasMinusculas = 'abcdefghijklmnopqrstuvxywz';
 const numeros = '0123456789';
 const simbolos = '!@%*?';
 
-// SELECIONANDO OS CHECKBOXES DO HTML
+const botoes = document.querySelectorAll('.parametro-senha__botao');
+const campoSenha = document.querySelector('#campo-senha');
 const checkbox = document.querySelectorAll('.checkbox');
 
-const botoes = document.querySelectorAll('.parametro-senha__botao');
+// CONSTANTE ADICIONADA NESSA AULA PARA GERENCIAR A BARRA DE FORÇA
+const forcaSenha = document.querySelector('.forca');
 
+// =======================================================
+// CONFIGURAÇÃO DOS EVENTOS DE CLIQUE
+// =======================================================
 botoes[0].onclick = diminuiTamanho;
 botoes[1].onclick = aumentaTamanho;
 
-// LAÇO FOR ADICIONADO: Faz a senha atualizar ao clicar em qualquer caixa de seleção
-for (let i = 0; i < checkbox.length; i++){
+for (let i = 0; i < checkbox.length; i++) {
     checkbox[i].onclick = geraSenha;
 }
 
-// FUNÇÃO ATUALIZADA CONFORME A AULA
-function geraSenha(){
+// =======================================================
+// FUNÇÕES DO PROJETO
+// =======================================================
+
+function geraSenha() {
     let alfabeto = '';
     
-    // Verificações se cada checkbox está marcado (checked) para montar o alfabeto
-    if (checkbox[0].checked){
+    if (checkbox[0].checked) {
         alfabeto = alfabeto + letrasMaiusculas;
     }
-    if (checkbox[1].checked){
+    if (checkbox[1].checked) {
         alfabeto = alfabeto + letrasMinusculas;
     }
-    if (checkbox[2].checked){
+    if (checkbox[2].checked) {
         alfabeto = alfabeto + numeros;
     }
-    if (checkbox[3].checked){
+    if (checkbox[3].checked) {
         alfabeto = alfabeto + simbolos;
     }
-
-    let senha = '';
     
-    // Laço for alterado para usar a variável 'alfabeto' dinamicamente
-    for (let i = 0; i < tamanhoSenha; i++){
+    let senha = '';
+    for (let i = 0; i < tamanhoSenha; i++) {
         let numeroAleatorio = Math.random() * alfabeto.length;
         numeroAleatorio = Math.floor(numeroAleatorio);
         senha = senha + alfabeto[numeroAleatorio];
     }
+    
     campoSenha.value = senha;
+    
+    // CHAMADA DA FUNÇÃO ADICIONADA NO FINAL
+    classificaSenha();
 }
 
-// CHAMADA INICIAL: Gera a primeira senha ao carregar a página
+// NOVA FUNÇÃO CRIADA E ESTRUTURADA NESSA AULA
+function classificaSenha() {
+    // Remove as classes antigas acumuladas para limpar o elemento
+    forcaSenha.classList.remove('fraca', 'media', 'forte');
+    
+    // Regras condicionais baseadas no tamanhoSenha
+    if (tamanhoSenha > 11) {
+        forcaSenha.classList.add('forte');
+    } else if (tamanhoSenha > 5 && tamanhoSenha < 12) {
+        forcaSenha.classList.add('media');
+    } else if (tamanhoSenha <= 5) {
+        forcaSenha.classList.add('fraca');
+    }
+}
+
+// CHAMADA INICIAL: Gera a primeira senha e define a força ao carregar a página
 geraSenha();
 
-function diminuiTamanho(){
-    if (tamanhoSenha > 1){
-       // tamanhoSenha = tamanhoSenha-1;
+function diminuiTamanho() {
+    if (tamanhoSenha > 1) {
         tamanhoSenha--;
     }
     numeroSenha.textContent = tamanhoSenha;
-    geraSenha(); 
+    geraSenha();
 }
 
-function aumentaTamanho(){
-    if (tamanhoSenha < 20){
-       // tamanhoSenha = tamanhoSenha+1;
-       tamanhoSenha++;
+function aumentaTamanho() {
+    if (tamanhoSenha < 20) {
+        tamanhoSenha++;
     }
     numeroSenha.textContent = tamanhoSenha;
-    geraSenha(); 
+    geraSenha();
 }
